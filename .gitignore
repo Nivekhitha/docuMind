@@ -1,0 +1,20 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Python runtime and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Uploads and persistent vector/document databases
+backend/uploads/
+backend/data/
+data/
+*.sqlite3
+
