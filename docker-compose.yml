@@ -1,0 +1,36 @@
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    env_file:
+      - backend/.env
+    environment:
+      BACKEND_PORT: "8001"
+      CHROMA_PATH: /app/backend/data/chroma
+      UPLOAD_DIR: /app/backend/uploads
+      METADATA_FILE: /app/backend/data/documents.json
+      FRONTEND_URL: http://localhost:3000
+    ports:
+      - "127.0.0.1:8001:8001"
+    volumes:
+      - documind_data:/app/backend/data
+      - documind_uploads:/app/backend/uploads
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    environment:
+      VITE_PROXY_TARGET: http://backend:8001
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  documind_data:
+  documind_uploads:
